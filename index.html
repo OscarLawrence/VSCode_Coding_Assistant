@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>My Vue App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            messages: [
+              {
+                role: "system",
+                content: `I am a virtual assistant to help you write better code. Please ask me anything.`,
+              },
+              {
+                role: "user",
+                content:
+                  "Hi, I am a full-stack developer. I am working with vue.js and node.js in my daily job. However, I am a fan of python, and write a lot of python code in my free time. I am also a big fan of machine learning and AI.",
+              },
+            ],
+            loading: false,
+          };
+        },
+        template: `<div>
+    <h2>ChatGPT</h2>
+    <div class="chat">
+      <div class="chat__messages">
+        <div class="chat__message" v-for="(message, i) in messages" :key="i">
+          <h4>{{ message.role }}:</h4>
+          <p>{{ message.content }}</p>
+        </div>
+      </div>
+      <div class="chat__input">
+        <input type="text" v-model="input" @keyup.enter="send" />
+        <button @click="send">Send</button>
+      </div>
+      {{ loading }}
+    </div>
+  </div>`,
+        methods: {
+          async send() {
+            this.messages.push({
+              role: "user",
+              content: this.input,
+            });
+            this.input = "";
+            this.loading = true;
+            // const apiKey =
+            //   "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";
+            // const openai = new OpenAIApi(new Configuration({ apiKey }));
+            // const response = await openai.createChatCompletion({
+            //   model: "gpt-3.5-turbo",
+            //   messages,
+            //   max_tokens: 512,
+            //   temperature: 0.7,
+            // });
+            // messages.push({
+            //   role: "system",
+            //   content: response.data.choices[0].text,
+            // });
+            // this.loading = false;
+            // this.input = null;
+          },
+        },
+      });
+      app.mount("#app");
+    </script>
+    <!-- <script src="./app.js"></script> -->
+  </body>
+</html>
